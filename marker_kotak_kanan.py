@@ -11,7 +11,7 @@ import time
 pos = [0,0,0]
 ori = [0,0,0,0]
 status = "loading"
-aaa = 1
+_id = 1
 
 solved = 0
 error = 0
@@ -25,15 +25,15 @@ b = 0.04
 bbb = 1
 ####1000 marker random joint   
 def makeBox(): 
-    global solved,error,Done, bbb, aaa, hehe
+    global solved,error,Done, bbb, _id, hehe
     if (hehe):
-        aaa = 1
+        _id = 1
     hehe = False
     marker = Marker()
     marker.header.frame_id = "base_link"
     marker.type = Marker.CUBE
     marker.action = Marker.ADD
-    marker.id = aaa
+    marker.id = _id
     marker.scale.x = 0.02
     marker.scale.y = 0.02
     marker.scale.z = 0.02
@@ -99,7 +99,7 @@ def makeBox2(pos_x,pos_y,pos_z):
 
 
 def mytopic_callback(msg):
-    global status, aaa, bbb
+    global status, _id, bbb
     status = msg.hasil
     pos[0] = msg.position_x
     pos[1] = msg.position_y
@@ -111,11 +111,11 @@ def mytopic_callback(msg):
     pubb= rospy.Publisher('/marker_basic', Marker, queue_size=1)
     marker1 = makeBox()
     pubb.publish(marker1)
-    aaa+=1
+    _id+=1
   
 
 def run():
-    global aaa,bbb,abc, y,z,a,b
+    global _id,bbb,abc, y,z,a,b
     rospy.init_node('marker_basic_node', anonymous=True)
     rate = rospy.Rate(1)
     rospy.Subscriber('chatter', jr, mytopic_callback)
